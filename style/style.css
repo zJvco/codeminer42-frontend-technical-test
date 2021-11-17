@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    color: unset;
+    text-decoration: none;
+}
+
+/* Left navbar */
+nav {
+    width: 100%;
+    max-width: 350px;
+    text-align: center;
+    padding: 35px 50px;
+    height: 100vh;
+}
+
+nav h4 {
+    margin-bottom: 15px;
+}
+
+nav a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    border-radius: 6px;
+}
+
+.container {
+    width: 100%;
+    margin: 20px;
+}
+
+/* Header top */
+.container header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container header h1 {
+    font-size: 1rem;
+}
+
+.container header .profile-icon {
+    width: 30px;
+    height: 30px;
+    background-color: #ccc;
+    border-radius: 50%;
+}
+
