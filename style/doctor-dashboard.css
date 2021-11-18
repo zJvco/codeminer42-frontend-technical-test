@@ -64,3 +64,36 @@ main {
     border-radius: 5px;
     cursor: pointer;
 }
+
+/* History layout */
+.history {
+    margin: 22px 0;
+}
+
+.history table {
+    width: 100%;
+    border: 1px solid rgba(204, 204, 204, 0.6);
+    border-radius: 10px;
+}
+
+.history table tr {
+    display: flex;
+    margin: 0 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(204, 204, 204, 0.6);
+}
+
+.history table tr:last-child {
+    border-bottom: none;
+}
+
+.history table tr td {
+    width: 100%;
+}
+
+#status-color {
+    color: #fff;
+    padding: 6px 15px;
+    border-radius: 5px;
+    background-color: red;
+}
