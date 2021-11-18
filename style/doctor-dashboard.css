@@ -91,9 +91,24 @@ main {
     width: 100%;
 }
 
-#status-color {
+.history table tr td span {
     color: #fff;
     padding: 6px 15px;
     border-radius: 5px;
-    background-color: red;
+}
+
+#status-completed {
+    background-color: #1ABC9C;
+}
+
+#status-absent {
+    background-color: #E74C3C;
+}
+
+#status-cancelled {
+    background-color: #808B96;
+}
+
+#status-pending {
+    background-color: #F1C40F;
 }
