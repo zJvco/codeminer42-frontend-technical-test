@@ -1,0 +1,66 @@
+:root {
+    /* Calendar layout variables */
+    --box-height: 80px;
+    --box-gap-size: 6px;
+    --hour-width: 65px;
+    --hour-height: calc(var(--box-height) + var(--box-gap-size));
+    --day-name-height: 30px;
+}
+
+main {
+    margin: 80px 35px;
+}
+
+/* Calendar layout */
+.calendar {
+    margin: 36px 0;
+    font-size: small;
+    overflow-x: auto;
+}
+
+.calendar .calendar-header {
+    display: flex;
+}
+
+.calendar .calendar-header .empty {
+    min-width: var(--hour-width);
+    height: var(--day-name-height);
+}
+
+.calendar .calendar-header .day-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-width: calc(150px + var(--box-gap-size));
+    height: var(--day-name-height);
+}
+
+.calendar .calendar-body {
+    display: flex;
+}
+
+.calendar .calendar-body .hour-container .hour {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--hour-width);
+    height: var(--hour-height);
+}
+
+.calendar .calendar-body .box-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: var(--box-gap-size);
+    height: fit-content;
+}
+
+.calendar .calendar-body .box-container .box {
+    width: 100%;
+    min-width: 150px;
+    height: var(--box-height);
+    border: 1px dashed #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
