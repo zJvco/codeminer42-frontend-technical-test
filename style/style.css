@@ -61,6 +61,12 @@ nav a {
     border-radius: 50%;
 }
 
+/* Footer */
+footer {
+    font-size: small;
+    text-align: center;
+}
+
 @media screen and (max-width: 1366px) {
     body {
         display: block;
@@ -89,6 +95,10 @@ nav a {
 
     .container header {
         display: none;
+    }
+
+    footer {
+        margin-bottom: 20px;
     }
 }
 
