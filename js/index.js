@@ -52,11 +52,79 @@ function convertDate(dt) {
     return `${dt.getFullYear()}/${dt.getMonth()}/${dt.getDate()} ${addZero(dt.getHours())}:${addZero(dt.getMinutes())}`;
 }
 
-// Create and load history in doctor page
-async function createHistory() {
-    const patient = new Patient();
-    const appointment = new Appointment();
-    
+// Create and load calendar
+async function createCalendar(patient, appointment) {
+    let patientsList = await patient.getPatients();
+    let appointmentsList = await appointment.getAppointments();
+
+    const scheduleColor = "#3498DB";
+    let days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+
+    // Get current Week
+    let curr = new Date();
+    let firstDay = curr.getDate() - (curr.getDay() - 1);
+    let lastDay = firstDay + 4;
+
+    for (let i = 0; i < appointmentsList.length; i++) {
+        for (let j = 0; j < patientsList.length; j++) {
+            if (appointmentsList[i].patientId == patientsList[j].id) {
+                let aptStartTime = new Date(appointmentsList[i].startTime);
+                let aptEndTime = new Date(appointmentsList[i].endTime);
+
+                // Checking if the date is between first day and last day in this week;
+                if (aptStartTime.getDate() < firstDay || aptStartTime.getDate() > lastDay) continue;
+
+                let day = days[aptStartTime.getDay()];
+                let time = `${addZero(aptStartTime.getHours())}-${addZero(aptStartTime.getMinutes())}`;
+
+                // If return 1 is 1 hour, return 0 is 30 minutes, return Nan the agenda is not completed 
+                let totalTime = parseInt(addZero(aptEndTime.getHours())) - parseInt(addZero(aptStartTime.getHours()));
+
+                const boxEl = document.querySelector(`.${day}-${time}`);
+
+                // Cheking if the hour isn't compatible with the doctor agenda
+                if (boxEl != null) {
+                    boxEl.style.border = "none";
+                    boxEl.style.backgroundColor = scheduleColor;
+
+                    let nameEl = document.createElement("h6");
+                    let descriptionEl = document.createElement("p");
+
+                    let invisibleDivInfo = document.createElement("div");
+                    invisibleDivInfo.classList.add("invisible-info");
+                    invisibleDivInfo.classList.add(`info-${appointmentsList[i].status}`);
+                    let typeEl = document.createElement("span");
+                    let statusEl = document.createElement("span");
+
+                    typeEl.innerText = `Type: ${appointmentsList[i].type}`;
+                    statusEl.innerText = `Status: ${appointmentsList[i].status}`;
+
+                    invisibleDivInfo.appendChild(typeEl);
+                    invisibleDivInfo.appendChild(statusEl);
+
+                    nameEl.innerText = `[${patientsList[j].name}]`;
+                    descriptionEl.innerText = appointmentsList[i].description;
+
+                    boxEl.appendChild(nameEl);
+                    boxEl.appendChild(descriptionEl);
+                    boxEl.appendChild(invisibleDivInfo);
+
+                    // 1 hour in calendar
+                    if (totalTime == 1) {
+                        boxEl.style.gridRow = "span 2";
+                        boxEl.style.height = "100%";
+                        let temp = parseInt(time.slice(time.indexOf("-") + 1)) + 30;
+                        let calc = temp > 59 ? (parseInt(time.slice(0, time.indexOf("-"))) + 1).toString() + "-00" : parseInt(time.slice(0, time.indexOf("-"))).toString() + "-" + temp.toString();
+                        document.querySelector(`.${day}-${calc}`).remove();
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Create and load history data
+async function createHistory(patient, appointment) {    
     let patientsList = await patient.getPatients();
     let appointmentsList = await appointment.getAppointments();
 
@@ -89,5 +157,9 @@ async function createHistory() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    createHistory();
+    const patient = new Patient();
+    const appointment = new Appointment();
+
+    createCalendar(patient, appointment);
+    createHistory(patient, appointment);
 });

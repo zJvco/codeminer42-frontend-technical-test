@@ -5,6 +5,12 @@
     --hour-width: 65px;
     --hour-height: calc(var(--box-height) + var(--box-gap-size));
     --day-name-height: 30px;
+
+    /* Colors */
+    --color-completed: #1ABC9C;
+    --color-absent: #E74C3C;
+    --color-cancelled: #808B96;
+    --color-pending: #F1C40F;
 }
 
 main {
@@ -57,12 +63,65 @@ main {
 }
 
 .calendar .calendar-body .box-container .box {
+    position: relative;
     width: 100%;
     min-width: 150px;
+    padding: 6px;
     height: var(--box-height);
     border: 1px dashed #ccc;
     border-radius: 5px;
     cursor: pointer;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.calendar .calendar-body .box-container .box:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.calendar .calendar-body .box-container .box p {
+    margin: 5px 0;
+}
+
+.calendar .calendar-body .box-container .box .invisible-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.calendar .calendar-body .box-container .box:hover .invisible-info {
+    display: flex;
+}
+
+.calendar .calendar-body .box-container .box .invisible-info span {
+    margin: 5px 0;
+}
+
+.calendar .calendar-body .box-container .box .info-completed {
+    background-color: var(--color-completed);
+}
+
+.calendar .calendar-body .box-container .box .info-absent {
+    background-color: var(--color-absent);
+}
+
+.calendar .calendar-body .box-container .box .info-cancelled {
+    background-color: var(--color-cancelled);
+}
+
+.calendar .calendar-body .box-container .box .info-pending {
+    background-color: var(--color-pending);
 }
 
 /* History layout */
@@ -98,19 +157,19 @@ main {
 }
 
 #status-completed {
-    background-color: #1ABC9C;
+    background-color: var(--color-completed);
 }
 
 #status-absent {
-    background-color: #E74C3C;
+    background-color: var(--color-absent);
 }
 
 #status-cancelled {
-    background-color: #808B96;
+    background-color: var(--color-cancelled);
 }
 
 #status-pending {
-    background-color: #F1C40F;
+    background-color: var(--color-pending);
 }
 
 @media screen and (max-width: 768px) {
