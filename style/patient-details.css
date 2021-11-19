@@ -10,12 +10,13 @@ section {
 
 .patient-details-section .details {
     width: 100%;
+    max-width: 440px;
     padding: 0 6px;
 }
 
 .patient-details-section .details h2 {
     font-size: medium;
-    margin-bottom: 32px;
+    margin-bottom: 20px;
 }
 
 .patient-details-section .details h4 {
@@ -27,10 +28,6 @@ section {
     display: flex;
     justify-content: space-between;
     font-size: small;
-}
-
-.patient-details-section .details p span {
-    margin: 0 10%;
 }
 
 /* Tabs section */
@@ -49,7 +46,7 @@ section {
 }
 
 .display-appointments {
-    padding: 40px 25px 0 25px;
+    padding: 40px 4% 0 4%;
 }
 
 .display-appointments table {
@@ -63,9 +60,14 @@ section {
 
 .display-appointments table tbody tr td {
     display: flex;
+    justify-content: center;
     align-items: center;
     width: 100%;
     font-size: 0.9rem;
+}
+
+.display-appointments table tbody tr td:first-child {
+    justify-content: start;
 }
 
 .display-appointments table tbody tr td:first-child span {
@@ -108,4 +110,30 @@ section {
 .appointment-details-section .doctor-description p {
     padding: 15px 20px;
     color: #333;
+}
+
+@media screen and (max-width: 1336px) {
+    /* Patient details section */
+    .patient-details-section {
+        flex-wrap: wrap;
+    }
+
+    .patient-details-section .details {
+        margin: 32px 0;
+    }
+
+    .patient-details-section .details:first-child {
+        min-width: 100%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    /* Tabs section */
+    .tabs-container button {
+        padding: 12px 12px;
+    }
+
+    .display-appointments table tbody tr td:first-child span {
+        display: none;
+    }
 }
