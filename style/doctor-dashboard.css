@@ -5,12 +5,6 @@
     --hour-width: 65px;
     --hour-height: calc(var(--box-height) + var(--box-gap-size));
     --day-name-height: 30px;
-
-    /* Colors */
-    --color-completed: #1ABC9C;
-    --color-absent: #E74C3C;
-    --color-cancelled: #808B96;
-    --color-pending: #F1C40F;
 }
 
 /* Calendar layout */
@@ -150,22 +144,6 @@
     color: #fff;
     padding: 6px 15px;
     border-radius: 5px;
-}
-
-#status-completed {
-    background-color: var(--color-completed);
-}
-
-#status-absent {
-    background-color: var(--color-absent);
-}
-
-#status-cancelled {
-    background-color: var(--color-cancelled);
-}
-
-#status-pending {
-    background-color: var(--color-pending);
 }
 
 @media screen and (max-width: 1366px) {

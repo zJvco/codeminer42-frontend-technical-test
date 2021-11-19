@@ -4,6 +4,14 @@
     box-sizing: border-box;
 }
 
+:root {
+    /* Colors */
+    --color-completed: #1ABC9C;
+    --color-absent: #E74C3C;
+    --color-cancelled: #808B96;
+    --color-pending: #F1C40F;
+}
+
 body {
     display: flex;
     font-family: Arial, Helvetica, sans-serif;
@@ -72,6 +80,23 @@ main {
 footer {
     font-size: small;
     text-align: center;
+}
+
+/* Status colors */
+#status-completed {
+    background-color: var(--color-completed);
+}
+
+#status-absent {
+    background-color: var(--color-absent);
+}
+
+#status-cancelled {
+    background-color: var(--color-cancelled);
+}
+
+#status-pending {
+    background-color: var(--color-pending);
 }
 
 @media screen and (max-width: 1366px) {

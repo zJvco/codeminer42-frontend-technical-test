@@ -37,14 +37,19 @@ section {
 .tabs-container button {
     border: none;
     outline: none;
-    font-size: large;
     cursor: pointer;
-    margin-right: 30px;
     font-size: 1rem;
+    padding: 12px 24px;
+    border-radius: 6px 6px 0 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.1), #fff);
+}
+
+.tabs-container button.selected {
+    background: unset;
 }
 
 .display-appointments {
-    padding: 55px 25px;
+    padding: 40px 25px;
 }
 
 .display-appointments table {
@@ -52,9 +57,25 @@ section {
 }
 
 .display-appointments table tbody tr {
-    margin: 15px 0;
+    display: flex;
+    margin-bottom: 20px;
 }
 
 .display-appointments table tbody tr td {
+    display: flex;
+    align-items: center;
+    width: 100%;
     font-size: 0.9rem;
+}
+
+.display-appointments table tbody tr td:first-child span {
+    font-size: large;
+    margin-right: 26px;
+}
+
+.display-appointments table tbody tr td:last-child span {
+    color: #fff;
+    padding: 6px 15px;
+    border-radius: 5px;
+    background-color: red;
 }
