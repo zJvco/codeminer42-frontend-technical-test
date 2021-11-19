@@ -1,5 +1,5 @@
 section {
-    margin-bottom: 38px;
+    margin-bottom: 56px;
 }
 
 /* Patient details section */
@@ -33,3 +33,28 @@ section {
     margin: 0 10%;
 }
 
+/* Tabs section */
+.tabs-container button {
+    border: none;
+    outline: none;
+    font-size: large;
+    cursor: pointer;
+    margin-right: 30px;
+    font-size: 1rem;
+}
+
+.display-appointments {
+    padding: 55px 25px;
+}
+
+.display-appointments table {
+    width: 100%;
+}
+
+.display-appointments table tbody tr {
+    margin: 15px 0;
+}
+
+.display-appointments table tbody tr td {
+    font-size: 0.9rem;
+}
