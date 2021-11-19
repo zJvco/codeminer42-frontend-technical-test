@@ -1,0 +1,35 @@
+section {
+    margin-bottom: 38px;
+}
+
+/* Patient details section */
+.patient-details-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.patient-details-section .details {
+    width: 100%;
+    padding: 0 6px;
+}
+
+.patient-details-section .details h2 {
+    font-size: medium;
+    margin-bottom: 32px;
+}
+
+.patient-details-section .details h4 {
+    font-size: x-large;
+    margin: 8px 0;
+}
+
+.patient-details-section .details p {
+    display: flex;
+    justify-content: space-between;
+    font-size: small;
+}
+
+.patient-details-section .details p span {
+    margin: 0 10%;
+}
+
