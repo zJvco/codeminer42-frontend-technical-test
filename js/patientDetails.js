@@ -5,16 +5,27 @@ async function consultAPI(endpoint="") {
     return response;
 }
 
-async function listPatients(patient) {
-    let patientsList = await patient.getPatients();
-    for (let i = 0; i < patientsList.length; i++) {
-        
+async function listPatients() {
+    const patList = JSON.parse(await (await consultAPI("patients")).text());
+    const aptList = JSON.parse(await (await consultAPI("appointments")).text());
+
+    const nav = document.querySelector("nav");
+
+    for (let i = 0; i < patList.length; i++) {
+        nav.innerHTML += `
+        <a href="#" onclick="showDashboard(${patList[i].id})">
+            ${patList[i].name}
+            <i class="fas fa-angle-right"></i>
+        </a>
+        `;
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const patient = new Patient();
-    const appointment = new Appointment();
+async function showDashboard(patientId) {
+    const singlePatient = JSON.parse(await (await consultAPI(`patients/${patientId}`)).text());
+    
+}
 
-    listPatients(patient);
+document.addEventListener("DOMContentLoaded", () => {
+    listPatients();
 });

@@ -21,6 +21,7 @@ nav {
     text-align: center;
     padding: 2% 3%;
     height: 100vh;
+    overflow: auto;
 }
 
 nav h4 {
@@ -36,6 +37,7 @@ nav a {
     border: 1px solid #ccc;
     padding: 8px 10px;
     border-radius: 6px;
+    margin: 8px 0;
 }
 
 .container {
