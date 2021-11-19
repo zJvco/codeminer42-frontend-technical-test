@@ -5,40 +5,6 @@ async function consultAPI(endpoint="") {
     return response;
 }
 
-// Patient class
-class Patient {
-    constructor() {
-        this.endpoint = "patients/";
-    }
-
-    async getPatients() {
-        let data = await (await consultAPI(this.endpoint)).text();
-        return JSON.parse(data);
-    }
-
-    async getPatientsById(id) {
-        let data = await (await consultAPI(this.endpoint + id)).text();
-        return JSON.parse(data);
-    }
-}
-
-// Appointment class
-class Appointment {
-    constructor() {
-        this.endpoint = "appointments/";
-    }
-
-    async getAppointments() {
-        let data = await (await consultAPI(this.endpoint)).text();
-        return JSON.parse(data);
-    }
-
-    async getAppointmentsById(id) {
-        let data = await (await consultAPI(this.endpoint + id)).text();
-        return JSON.parse(data);
-    }
-}
-
 // Function to add zero in numbers less than 10
 function addZero(i) {
     if (i < 10) {
@@ -53,23 +19,21 @@ function convertDate(dt) {
 }
 
 // Create and load calendar
-async function createCalendar(patient, appointment) {
-    let patientsList = await patient.getPatients();
-    let appointmentsList = await appointment.getAppointments();
-
+async function createCalendar() {
+    let patList = await (await consultAPI("patients")).text();
+    let aptList = await (await consultAPI("appointments")).text();
+    
     const scheduleColor = "#3498DB";
     let days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-
     // Get current Week
     let curr = new Date();
     let firstDay = curr.getDate() - (curr.getDay() - 1);
     let lastDay = firstDay + 4;
-
-    for (let i = 0; i < appointmentsList.length; i++) {
-        for (let j = 0; j < patientsList.length; j++) {
-            if (appointmentsList[i].patientId == patientsList[j].id) {
-                let aptStartTime = new Date(appointmentsList[i].startTime);
-                let aptEndTime = new Date(appointmentsList[i].endTime);
+    for (let i = 0; i < aptList.length; i++) {
+        for (let j = 0; j < patList.length; j++) {
+            if (aptList[i].patientId == patList[j].id) {
+                let aptStartTime = new Date(aptList[i].startTime);
+                let aptEndTime = new Date(aptList[i].endTime);
 
                 // Checking if the date is between first day and last day in this week;
                 if (aptStartTime.getDate() < firstDay || aptStartTime.getDate() > lastDay) continue;
@@ -92,18 +56,18 @@ async function createCalendar(patient, appointment) {
 
                     let invisibleDivInfo = document.createElement("div");
                     invisibleDivInfo.classList.add("invisible-info");
-                    invisibleDivInfo.classList.add(`info-${appointmentsList[i].status}`);
+                    invisibleDivInfo.classList.add(`info-${aptList[i].status}`);
                     let typeEl = document.createElement("span");
                     let statusEl = document.createElement("span");
 
-                    typeEl.innerText = `Type: ${appointmentsList[i].type}`;
-                    statusEl.innerText = `Status: ${appointmentsList[i].status}`;
+                    typeEl.innerText = `Type: ${aptList[i].type}`;
+                    statusEl.innerText = `Status: ${aptList[i].status}`;
 
                     invisibleDivInfo.appendChild(typeEl);
                     invisibleDivInfo.appendChild(statusEl);
 
-                    nameEl.innerText = `[${patientsList[j].name}]`;
-                    descriptionEl.innerText = appointmentsList[i].description;
+                    nameEl.innerText = `[${patList[j].name}]`;
+                    descriptionEl.innerText = aptList[i].description;
 
                     boxEl.appendChild(nameEl);
                     boxEl.appendChild(descriptionEl);
@@ -124,12 +88,11 @@ async function createCalendar(patient, appointment) {
 }
 
 // Create and load history data
-async function createHistory(patient, appointment) {    
-    let patientsList = await patient.getPatients();
-    let appointmentsList = await appointment.getAppointments();
+async function createHistory() {    
+    let patList = await (await consultAPI("patients")).text();
+    let aptList = await (await consultAPI("appointments")).text();
 
     const historyTableTbody = document.querySelector(".history table tbody");
-
     const icons = {
         "firstVisit": "<i class='fas fa-hospital'></i>",
         "followUp": "<i class='fas fa-stethoscope'></i>",
@@ -137,18 +100,17 @@ async function createHistory(patient, appointment) {
         "exam": "<i class='fas fa-file-medical-alt'></i>",
         "surgery": "<i class='fas fa-syringe'></i>"
     }
-
-    for (let i = 0; i < appointmentsList.length; i++) {
-        for (let j = 0; j < patientsList.length; j++) {
-            if (appointmentsList[i].patientId == patientsList[j].id) {
-                let dateStartTime = new Date(appointmentsList[i].startTime);
-                let dateEndTime = new Date(appointmentsList[i].endTime);
+    for (let i = 0; i < aptList.length; i++) {
+        for (let j = 0; j < patList.length; j++) {
+            if (aptList[i].patientId == patList[j].id) {
+                let dateStartTime = new Date(aptList[i].startTime);
+                let dateEndTime = new Date(aptList[i].endTime);
                 historyTableTbody.innerHTML += `
                 <tr>
-                    <td>${appointmentsList[i].endTime == null ? convertDate(dateStartTime) : convertDate(dateStartTime) + ' - ' + addZero(dateEndTime.getHours()) + ':' + addZero(dateEndTime.getMinutes())}</td>
-                    <td><span id="status-${appointmentsList[i].status}">${appointmentsList[i].status}</span></td>
-                    <td>${patientsList[j].name}</td>
-                    <td>${icons[appointmentsList[i].type]} ${appointmentsList[i].type}</td>
+                    <td>${aptList[i].endTime == null ? convertDate(dateStartTime) : convertDate(dateStartTime) + ' - ' + addZero(dateEndTime.getHours()) + ':' + addZero(dateEndTime.getMinutes())}</td>
+                    <td><span id="status-${aptList[i].status}">${aptList[i].status}</span></td>
+                    <td>${patList[j].name}</td>
+                    <td>${icons[aptList[i].type]} ${aptList[i].type}</td>
                 </tr>
                 `
             }
@@ -157,9 +119,6 @@ async function createHistory(patient, appointment) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const patient = new Patient();
-    const appointment = new Appointment();
-
-    createCalendar(patient, appointment);
-    createHistory(patient, appointment);
+    createCalendar();
+    createHistory();
 });

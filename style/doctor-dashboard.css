@@ -13,10 +13,6 @@
     --color-pending: #F1C40F;
 }
 
-main {
-    margin: 80px 35px;
-}
-
 /* Calendar layout */
 .calendar {
     margin: 36px 0;

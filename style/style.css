@@ -61,6 +61,11 @@ nav a {
     border-radius: 50%;
 }
 
+/* Main content */
+main {
+    margin: 80px 35px;
+}
+
 /* Footer */
 footer {
     font-size: small;
