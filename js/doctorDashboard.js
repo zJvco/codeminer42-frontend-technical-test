@@ -20,8 +20,8 @@ function convertDate(dt) {
 
 // Create and load calendar
 async function createCalendar() {
-    let patList = await (await consultAPI("patients")).text();
-    let aptList = await (await consultAPI("appointments")).text();
+    const patList = JSON.parse(await (await consultAPI("patients")).text());
+    const aptList = JSON.parse(await (await consultAPI("appointments")).text());
     
     const scheduleColor = "#3498DB";
     let days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
@@ -89,8 +89,8 @@ async function createCalendar() {
 
 // Create and load history data
 async function createHistory() {    
-    let patList = await (await consultAPI("patients")).text();
-    let aptList = await (await consultAPI("appointments")).text();
+    const patList = JSON.parse(await (await consultAPI("patients")).text());
+    const aptList = JSON.parse(await (await consultAPI("appointments")).text());
 
     const historyTableTbody = document.querySelector(".history table tbody");
     const icons = {
