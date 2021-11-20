@@ -102,7 +102,7 @@ async function createHistory() {
     }
     for (let i = 0; i < aptList.length; i++) {
         for (let j = 0; j < patList.length; j++) {
-            if (aptList[i].patientId == patList[j].id) {
+            if (aptList[i].patientId == patList[j].id && aptList[i].status != "pending") {
                 let dateStartTime = new Date(aptList[i].startTime);
                 let dateEndTime = new Date(aptList[i].endTime);
                 historyTableTbody.innerHTML += `
