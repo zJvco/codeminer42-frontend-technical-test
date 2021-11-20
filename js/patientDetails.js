@@ -127,6 +127,7 @@ async function displayRecentTab() {
 
     for (let i = 0; i < appointmentsList.length; i++) {
         let targetMonth = new Date(appointmentsList[i].startTime).getMonth();
+        // Display only recent appointments (last month)
         if (singlePatient.id == appointmentsList[i].patientId && targetMonth == biggestMonth.getMonth()) {
             let aptStartDate = new Date(appointmentsList[i].startTime);
             let aptEndDate = new Date(appointmentsList[i].endTime);
@@ -146,18 +147,59 @@ async function displayRecentTab() {
 
 // Display upcoming info of patient
 async function displayUpComingTab() {
-    
+    const singlePatient = JSON.parse(await (await consultAPI(`patients/${currentPatientId}`)).text());
+    const appointmentsList = JSON.parse(await (await consultAPI(`appointments`)).text());
+
+    for (let i = 0; i < appointmentsList.length; i++) {
+        // Display only pending appointments
+        if (singlePatient.id == appointmentsList[i].patientId && appointmentsList[i].status == "pending") {
+            let aptStartDate = new Date(appointmentsList[i].startTime);
+            let aptEndDate = new Date(appointmentsList[i].endTime);
+            tabTableTbody.innerHTML += `
+            <tr>
+                <td>
+                    <span>${icons[appointmentsList[i].type]}</span>
+                    ${formatDate(aptStartDate)} ${isNaN(aptEndDate) == true ? formatTime(aptStartDate) : formatTime(aptStartDate) + " - " + formatTime(aptEndDate)}
+                </td>
+                <td>${appointmentsList[i].type}</td>
+                <td><span id="status-${appointmentsList[i].status}">${appointmentsList[i].status}</span></td>
+            </tr>
+            `
+        }
+    }
 }
 
 // Display history info of patient
 async function displayHistoryTab() {
+    const singlePatient = JSON.parse(await (await consultAPI(`patients/${currentPatientId}`)).text());
+    const appointmentsList = JSON.parse(await (await consultAPI(`appointments`)).text());
 
+    for (let i = 0; i < appointmentsList.length; i++) {
+        // Display all appointments of the patient
+        if (singlePatient.id == appointmentsList[i].patientId) {
+            let aptStartDate = new Date(appointmentsList[i].startTime);
+            let aptEndDate = new Date(appointmentsList[i].endTime);
+            tabTableTbody.innerHTML += `
+            <tr>
+                <td>
+                    <span>${icons[appointmentsList[i].type]}</span>
+                    ${formatDate(aptStartDate)} ${isNaN(aptEndDate) == true ? formatTime(aptStartDate) : formatTime(aptStartDate) + " - " + formatTime(aptEndDate)}
+                </td>
+                <td>${appointmentsList[i].type}</td>
+                <td><span id="status-${appointmentsList[i].status}">${appointmentsList[i].status}</span></td>
+            </tr>
+            `
+        }
+    }
 }
 
 // Show all information of the patient
 async function showDashboard(patientId) {
     currentPatientId = patientId;
     tabTableTbody.innerHTML = "";
+    recentTabBtn.classList.add("selected");
+    upComingTabBtn.classList.remove("selected");
+    historyTab.classList.remove("selected");
 
     patientsNav.classList.remove("show");
     const contentSections = document.querySelectorAll("main section");
