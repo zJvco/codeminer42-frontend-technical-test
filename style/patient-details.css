@@ -99,7 +99,7 @@ nav button {
     color: #fff;
     padding: 6px 15px;
     border-radius: 5px;
-    background-color: red;
+    background-color: var(--color-absent);
 }
 
 /* Appointment details */
