@@ -6,12 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/patient-details.css">
-    <title>Patient details</title>
+    <title>Patient Details</title>
 </head>
 <body>
     <!-- Navbar in the left of the page -->
     <nav>
         <h4>Medical Test</h4>
+        <button class="nav-menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="patients-list"></div>
     </nav>
     <!-- Right side container -->
     <div class="container">
@@ -20,24 +24,29 @@
             <h1>Dashboard</h1>
             <div class="profile-icon"></div>
         </header>
+        <!-- Link to return to doctor dashboard page -->
+        <a href="doctor-dashboard.html" style="font-size: small; color: #3498DB; margin: 0 15px;">
+            <span style="margin: 0 4px;"><i class="fas fa-caret-left"></i></span>
+            Doctor Dashboard
+        </a>
         <!-- Main content -->
         <main>
             <!-- Patient details section -->
             <section class="patient-details-section">
                 <div class="patient-info details">
                     <h2>Patient Info</h2>
-                    <h4>Hermam Holland</h4>
-                    <p>377.634.864-74<span>51y/o</span></p>
+                    <h4 id="patient-name"></h4>
+                    <p id="patient-doc"><span>51y/o</span></p>
                 </div>
                 <div class="plan-info details">
                     <h2>Plan Info</h2>
-                    <h4>National Basic</h4>
-                    <p>752.921/6400</p>
+                    <h4 id="patient-insurance-plan"></h4>
+                    <p id="patient-heath-system-id"></p>
                 </div>
                 <div class="latest-app details">
                     <h2>Latest App.</h2>
-                    <h4>Neurology</h4>
-                    <p>04/30/2021</p>
+                    <h4 id="last-appointment-specialty"></h4>
+                    <p id="last-appointment-date"></p>
                 </div>
             </section>
 

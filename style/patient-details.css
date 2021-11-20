@@ -1,5 +1,25 @@
 section {
     margin-bottom: 56px;
+    transform: translateX(200%);
+}
+
+section.move {
+    transform: translateX(0);
+    transition: all 0.2s ease-in-out;
+}
+
+/* Main */
+main {
+    overflow: hidden;
+}
+
+/* Nav */
+nav button {
+    display: none;
+    border: none;
+    outline: none;
+    font-size: x-large;
+    cursor: pointer;
 }
 
 /* Patient details section */
@@ -113,6 +133,25 @@ section {
 }
 
 @media screen and (max-width: 1336px) {
+    /* Nav */
+    nav {
+        flex-wrap: wrap;
+    }
+
+    nav button {
+        display: block;
+    }
+
+    nav .patients-list {
+        display: none;
+    }
+
+    nav .patients-list.show {
+        display: block;
+        width: 100%;
+        margin-top: 20px;
+    }
+
     /* Patient details section */
     .patient-details-section {
         flex-wrap: wrap;
