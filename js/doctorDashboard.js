@@ -39,15 +39,36 @@ async function createCalendar() {
                 if (aptStartTime.getDate() < firstDay || aptStartTime.getDate() > lastDay) continue;
 
                 let day = days[aptStartTime.getDay()];
-                let time = `${addZero(aptStartTime.getHours())}-${addZero(aptStartTime.getMinutes())}`;
+                let hour = addZero(aptStartTime.getHours());
+                let minutes = addZero(aptStartTime.getMinutes());
+                let time = `${hour}-${minutes}`;
 
                 // If return 1 is 1 hour, return 0 is 30 minutes, return Nan the agenda is not completed 
                 let totalTime = parseInt(addZero(aptEndTime.getHours())) - parseInt(addZero(aptStartTime.getHours()));
 
-                const boxEl = document.querySelector(`.${day}-${time}`);
+                let boxEl = document.querySelector(`.${day}-${time}`);
 
                 // Cheking if the hour isn't compatible with the doctor agenda
                 if (boxEl != null) {
+                    // Finding a empty agenda in calendar to put the patient witch have the same agenda of other
+                    while (true) {
+                        if (boxEl.innerHTML != "") {
+                            let minTemp = parseInt(minutes) + 30;
+                            if (minTemp > 59) {
+                                hour = (parseInt(hour) + 1).toString();
+                                minutes = "00";
+                            }
+                            else {
+                                minutes = minTemp.toString();
+                            }
+                            time = `${hour}-${minutes}`;
+                            boxEl = document.querySelector(`.${day}-${time}`);
+                        }
+                        else {
+                            break;
+                        }
+                    }
+
                     boxEl.style.border = "none";
                     boxEl.style.backgroundColor = scheduleColor;
 
