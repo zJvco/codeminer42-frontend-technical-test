@@ -217,6 +217,7 @@ async function showDashboard(patientId) {
 
     let lastDate = null;
     let specialtyName = null;
+    let doctorNotes = null;
     for (let i = 0; i < appointmentsList.length; i++) {
         if (singlePatient.id == appointmentsList[i].patientId) {
             if (appointmentsList[i].status == "completed") {
@@ -225,26 +226,37 @@ async function showDashboard(patientId) {
                     if (tempdt > lastDate) {
                         lastDate = tempdt;
                         specialtyName = appointmentsList[i].specialty;
+                        doctorNotes = appointmentsList[i].notes;
                     }
                 }
                 else {
                     lastDate = new Date(appointmentsList[i].endTime);
                     specialtyName = appointmentsList[i].specialty;
+                    doctorNotes = appointmentsList[i].notes;
                 }
             }
         }
     }
 
+    specialtyName = specialtyName == null ? "No Specialty" : titleCase(specialtyName);
+    lastDate = lastDate == undefined ? "No Date" : formatDate(lastDate);
+    doctorNotes = (doctorNotes == null || doctorNotes == "") ? "No Notes" : doctorNotes;
+
     document.getElementById("patient-name").innerText = `${singlePatient.name}`;
     document.getElementById("patient-doc").innerText = `${formatDocument(singlePatient.document)}`;
     document.getElementById("patient-insurance-plan").innerText = `${singlePatient.insurancePlan}`;
     document.getElementById("patient-heath-system-id").innerText = `${formatHealthSystemId(singlePatient.healthSystemId)}`;
-    document.getElementById("last-appointment-specialty").innerText = `${specialtyName == null ? "No Specialty" : titleCase(specialtyName)}`;
-    document.getElementById("last-appointment-date").innerText = `${lastDate == undefined ? "No Date" : formatDate(lastDate)}`;
+    document.getElementById("last-appointment-specialty").innerText = `${specialtyName}`;
+    document.getElementById("last-appointment-date").innerText = `${lastDate}`;
 
     contentSections.forEach(section => {
         section.classList.add("move");
     });
+
+    // Appointments details (only completed appointments)
+    document.querySelector(".appointment-details-date").innerText = `${lastDate}`;
+    document.querySelector(".appointment-details-specialty").innerText = `${specialtyName == "No Specialty" ? specialtyName : specialtyName + " says: "}`;
+    document.querySelector(".appointment-details-description").innerText = `${doctorNotes}`;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
